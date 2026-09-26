@@ -66,7 +66,7 @@ Every decision includes a confidence value, an uncertainty description, and reas
 
 ## Architecture
 
-<img src="assets/github2.jpg" alt="FlyPop system architecture and decision layers" width="100%" />
+<img src="assets/github22.jpg" alt="FlyPop system architecture and decision layers" width="100%" />
 
 ```text
 camera / video
@@ -137,6 +137,8 @@ assets/
 ```
 
 ## Roadmap
+
+<img src="assets/github33.jpg" alt="FlyPop Roadmap" width="100%" />
 
 - [x] Typed observation and action models.
 - [x] Simplified visual reflex baseline.
