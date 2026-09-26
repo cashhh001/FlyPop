@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="assets/github11.jpg" alt="FlyPop - embodied AI research prototype" width="100%" />
+<img src="assets/github11.png" alt="FlyPop - embodied AI research prototype" width="100%" />
 
 # FlyPop
 
