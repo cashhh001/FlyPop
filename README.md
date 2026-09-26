@@ -1,40 +1,35 @@
+<div align="center">
+
+<img src="assets/flypop-banner.svg" alt="FlyPop - embodied AI research prototype" width="100%" />
+
 # FlyPop
 
-FlyPop is an embodied AI research prototype built around a quadruped robot body.
+### A physical AI system with a small point of view.
 
-It explores a simple question:
+[![Python](https://img.shields.io/badge/Python-3.11%2B-3776AB?logo=python&logoColor=white)](https://www.python.org/)
+[![Tests](https://img.shields.io/badge/tests-dry--run%20ready-2ea44f)](tests/)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![Status](https://img.shields.io/badge/status-research%20prototype-orange)](docs/experiments.md)
 
-> A robot does not need to understand an entire room before it can notice that something changed inside it.
+[Quick start](#quick-start) · [Architecture](#architecture) · [Demo](#demo) · [Roadmap](#roadmap)
 
-The project combines:
+</div>
 
-- A physical robot body for safe real-world movement.
-- A fly-inspired visual reflex layer for contrast, motion, and directional change.
-- A higher-level analytical layer for context and bounded action selection.
-- Structured memory for comparing current observations with previous events.
-- Human-readable decision traces that separate observation, inference, uncertainty, and action.
+FlyPop explores what happens when a physical robot combines a fly-inspired visual reflex layer, structured memory, analytical reasoning, and bounded action selection.
 
-FlyPop is not a literal fly brain inside a robot dog. It is not a reconstruction of a complete Drosophila nervous system, a dog brain, consciousness, or general intelligence. Biology provides architectural inspiration; the implementation is a simplified engineering model that must be tested against baselines.
+The robot does not need to understand an entire room before it can notice that something changed inside it.
 
-## Current status
+## What FlyPop is
 
-This repository contains a dry-run-first prototype. It can run without a camera, a robot, or external model credentials.
+FlyPop combines:
 
-Implemented:
+- A quadruped robot body for safe real-world movement.
+- A simplified fly-inspired reflex layer for contrast, motion, and directional change.
+- A higher-level analytical layer for context and decision-making.
+- Structured memory for comparing current evidence with previous observations.
+- Human-readable traces that separate observation, inference, uncertainty, and action.
 
-- Typed observation, memory, decision, and action models.
-- Simple contrast and motion reflex scoring.
-- Bounded action selection with explicit uncertainty.
-- JSONL decision traces.
-- A dry-run robot adapter that never sends hardware commands.
-- Synthetic demo and unit tests.
-
-Not yet implemented:
-
-- A validated biological neural simulation.
-- A confirmed robot-specific transport adapter.
-- Quantitative comparison against a conventional reactive baseline.
-- Claims of improved autonomy or physical performance.
+FlyPop is not a literal fly brain inside a robot dog. It is not a complete Drosophila reconstruction, a dog brain, consciousness, or general intelligence. Biology provides architectural inspiration; the implementation is a simplified engineering model that must be tested against baselines.
 
 ## Quick start
 
@@ -48,11 +43,26 @@ python examples/synthetic_demo.py
 pytest
 ```
 
-The demo produces an interpretable loop:
+The repository is dry-run-first. The demo does not require a camera, a robot, a network connection, or model credentials.
+
+## Demo
+
+The core loop is:
 
 ```text
 observation -> memory lookup -> bounded action -> outcome -> memory update
 ```
+
+Example output:
+
+```text
+observation=0.05/0.05 -> action=wait
+observation=0.82/0.25 -> action=investigate
+observation=0.82/0.25 -> action=investigate
+observation=0.20/0.78 -> action=orient
+```
+
+Every decision includes a confidence value, an uncertainty description, and reasons that can be inspected after the run.
 
 ## Architecture
 
@@ -80,14 +90,27 @@ native robot controller: balance, gait, limits, emergency stop
 
 The analytical layer does not control individual motors, joints, torque, gait, or balance. A real robot adapter must remain behind the bounded action interface and preserve the platform's native safety controller.
 
-## Safety model
+## Action vocabulary
 
-- The default adapter is dry-run.
+| Action | Purpose |
+| --- | --- |
+| `observe` | Keep monitoring the current view. |
+| `orient` | Turn toward a detected change without committing to forward motion. |
+| `investigate` | Move toward a flagged region to gather more evidence. |
+| `follow` | Track a moving signal or object. |
+| `search` | Explore when no clear target is available. |
+| `return` | Move back toward a known reference point. |
+| `wait` | Pause and request another observation. |
+| `stop` | Halt immediately. |
+
+## Safety boundary
+
+- The default robot adapter is dry-run.
 - The action vocabulary is an allowlist.
 - `stop` is always available.
 - Unknown actions are rejected.
 - No raw motor commands are generated by the analytical layer.
-- Hardware integration is intentionally marked as an implementation task until the exact platform and protocol are verified.
+- Hardware integration remains a separate implementation task until the exact platform and protocol are verified.
 
 ## Repository layout
 
@@ -101,21 +124,34 @@ flypop/
   cli.py          Command-line demo entry point
 examples/
   synthetic_demo.py
- tests/
+tests/
   test_flypop.py
 docs/
   architecture.md
   experiments.md
+assets/
+  flypop-banner.svg
 ```
 
-## Development principles
+## Roadmap
 
-1. Separate live observation, memory, inference, uncertainty, and confirmed action.
-2. Treat biological systems as inspiration, not as a shortcut to biological claims.
-3. Prefer reproducible dry-run experiments before physical tests.
-4. Log failures, repeated actions, and uncertainty instead of hiding them.
-5. Compare every new behavior against a simpler baseline.
+- [x] Typed observation and action models.
+- [x] Simplified visual reflex baseline.
+- [x] Bounded memory and decision traces.
+- [x] Dry-run robot adapter.
+- [x] Synthetic demo and tests.
+- [ ] Add a real camera adapter.
+- [ ] Add a verified platform-specific action adapter.
+- [ ] Compare memory against a stateless baseline.
+- [ ] Run controlled physical experiments.
+- [ ] Document failures and uncertainty alongside successful runs.
+
+## Scientific integrity
+
+This project distinguishes between biological research, engineering inspiration, implemented prototype behavior, future hypotheses, and demonstrated results.
+
+Claims about performance, autonomy, hardware, or biological fidelity should be supported by reproducible experiments. Until then, they remain hypotheses to test.
 
 ## License
 
-MIT. See `LICENSE`.
+MIT. See [LICENSE](LICENSE).
