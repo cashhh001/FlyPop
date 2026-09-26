@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="assets/flypop-banner.svg" alt="FlyPop - embodied AI research prototype" width="100%" />
+<img src="assets/github1.jpg" alt="FlyPop - embodied AI research prototype" width="100%" />
 
 # FlyPop
 
@@ -66,6 +66,8 @@ Every decision includes a confidence value, an uncertainty description, and reas
 
 ## Architecture
 
+<img src="assets/github2.jpg" alt="FlyPop system architecture and decision layers" width="100%" />
+
 ```text
 camera / video
       |
@@ -130,7 +132,8 @@ docs/
   architecture.md
   experiments.md
 assets/
-  flypop-banner.svg
+  github1.jpg
+  github2.jpg
 ```
 
 ## Roadmap
