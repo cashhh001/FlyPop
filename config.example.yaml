@@ -1,0 +1,26 @@
+# FlyPop configuration example.
+# The current prototype reads no external hardware by default.
+mode: dry_run
+
+reflex:
+  contrast_threshold: 0.35
+  motion_threshold: 0.30
+  direction_bins: 8
+
+memory:
+  max_events: 100
+  similarity_threshold: 0.75
+
+decision:
+  repeated_failure_limit: 2
+  default_action: wait
+
+robot:
+  adapter: dry_run
+  # Replace only after the exact robot platform and protocol are verified.
+  transport: null
+  host: null
+  port: null
+
+logging:
+  path: logs/decisions.jsonl
